@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Página não encontrada | Stand Auto{% endblock %}
+{% block content %}
+<section class="cartao estado-vazio">
+     <span class="etiqueta">Erro 404</span>
+     <h1>Página não encontrada</h1>
+     <p>O automóvel ou a página que procura não existe.</p>
+     <a class="botao botao-primario" href="{{ url_for('listar_automoveis') }}">Voltar ao inventário</a>
+</section>
+{% endblock %}

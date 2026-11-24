@@ -1,0 +1,379 @@
+/* =================================================================ati
+   1. VARIÁVEIS GLOBAIS
+   ================================================================ */
+:root {
+  --fundo: #f5f7fb;
+  --superficie: #ffffff;
+  --texto: #182230;
+  --texto-suave: #697586;
+  --linha: #e5e9f0;
+  --primaria: #135cbe;
+  --primaria-escura: #0d438b;
+  --sucesso: #137a52;
+  --erro: #b42318;
+  --sombra: 0 12px 30px rgba(25, 45, 80, 0.08);
+}
+
+/* =================================================================
+   2. ESTILOS BASE E RESET
+   ================================================================ */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--primaria);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--primaria-escura);
+}
+
+h1 {
+  margin: 5px 0 8px;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -.04em;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+p {
+  color: var(--texto-suave);
+}
+
+/* =================================================================
+   3. LAYOUT E ESTRUTURA
+   ================================================================ */
+.container {
+  width: min(1120px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.cabecalho {
+  background: #102a43;
+  color: white;
+  border-bottom: 4px solid #3d8bfd;
+}
+
+.cabecalho-conteudo {
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.cabecalho nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.cabecalho nav > a:not(.botao) {
+  color: #d9e7f7;
+}
+
+.marca-site {
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: .02em;
+}
+
+.cabecalho-pagina {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  padding: 54px 0 28px;
+}
+
+/* =================================================================
+   4. COMPONENTES (Botões, Cartões, Tabelas e Formulários)
+   ================================================================ */
+.etiqueta {
+  color: var(--primaria);
+  font-size: .74rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+/* Botões */
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  font: inherit;
+}
+
+.botao-primario {
+  background: var(--primaria);
+  color: white;
+}
+
+.botao-primario:hover {
+  background: var(--primaria-escura);
+  color: white;
+}
+
+.botao-secundario {
+  background: #edf2f7;
+  color: var(--texto);
+}
+
+/* Cartões */
+.cartao {
+  background: var(--superficie);
+  border: 1px solid var(--linha);
+  border-radius: 14px;
+  box-shadow: var(--sombra);
+}
+
+/* Tabelas */
+.tabela-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+}
+
+th, td {
+  padding: 18px 20px;
+  text-align: left;
+  border-bottom: 1px solid var(--linha);
+  white-space: nowrap;
+}
+
+th {
+  color: var(--texto-suave);
+  font-size: .74rem;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+}
+
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+td small {
+  display: block;
+  color: var(--texto-suave);
+  margin-top: 3px;
+}
+
+.link-acao {
+  font-weight: 700;
+}
+
+/* Estados (Disponível / Vendido) */
+.estado {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+.estado-disponível {
+  color: #086c43;
+  background: #dff7eb;
+}
+
+.estado-vendido {
+  color: #8b2b12;
+  background: #ffeadf;
+}
+
+/* Formulários */
+.formulario {
+  padding: 28px;
+}
+
+.grelha-formulario {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.campo-largo {
+  grid-column: 1 / -1;
+}
+
+label, .rotulo {
+  font-size: .8rem;
+  color: var(--texto-suave);
+  font-weight: 800;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px 13px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  color: var(--texto);
+  background: white;
+  font: inherit;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: 3px solid rgba(19, 92, 190, .15);
+  border-color: var(--primaria);
+}
+
+textarea {
+  resize: vertical;
+}
+
+.acoes-formulario {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+/* Mensagens e Alertas */
+.mensagens {
+  padding-top: 24px;
+}
+
+.mensagem {
+  padding: 13px 16px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.mensagem-sucesso {
+  background: #dff7eb;
+  color: var(--sucesso);
+}
+
+.mensagem-erro {
+  background: #fee4e2;
+  color: var(--erro);
+}
+
+.estado-vazio {
+  margin-top: 10px;
+  padding: 56px 24px;
+  text-align: center;
+}
+
+.voltar {
+  display: inline-block;
+  margin-top: 38px;
+  font-weight: 700;
+}
+
+/* Detalhes do Veículo */
+.detalhes-cabecalho {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 32px 0 26px;
+}
+
+.matricula-destaque {
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: .12em;
+  color: var(--texto);
+}
+
+.grelha-detalhes {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 26px;
+  padding: 30px;
+}
+
+.grelha-detalhes div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.grelha-detalhes strong {
+  font-size: 1.05rem;
+}
+
+.preco-destaque {
+  color: var(--primaria);
+}
+
+.descricao {
+  border-top: 1px solid var(--linha);
+  padding: 24px 30px 30px;
+}
+
+.descricao p {
+  margin-bottom: 0;
+  white-space: pre-line;
+}
+
+/* =================================================================
+   5. MEDIA QUERIES (Responsividade)
+   ================================================================ */
+@media (max-width: 700px) {
+  .container {
+    width: min(100% - 28px, 1120px);
+  }
+  
+  .cabecalho-conteudo, 
+  .cabecalho-pagina, 
+  .detalhes-cabecalho {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  
+  .cabecalho-conteudo {
+    padding: 16px 0;
+  }
+  
+  .cabecalho nav {
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  
+  .grelha-formulario, 
+  .grelha-detalhes {
+    grid-template-columns: 1fr;
+  }
+  
+  .grelha-detalhes {
+    padding: 24px;
+  }
+  
+  .formulario {
+    padding: 20px;
+  }
+}

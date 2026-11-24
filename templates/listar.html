@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Inventário | Stand Auto{% endblock %}
+{% block content %}
+<section class="cabecalho-pagina">
+     <div>
+          <span class="etiqueta">Gestão de inventário</span>
+          <h1>Automóveis registados</h1>
+          <p>{{ automoveis|length }} automóvel(is) guardado(s) na base de dados.</p>
+     </div>
+     <a class="botao botao-primario" href="{{ url_for('criar_automovel') }}">+ Novo automóvel</a>
+</section>
+
+{% if automoveis %}
+     <div class="cartao tabela-wrapper">
+          <table>
+               <thead>
+                    <tr>
+                         <th>Automóvel</th>
+                         <th>Matrícula</th>
+                         <th>Ano</th>
+                         <th>Quilometragem</th>
+                         <th>Preço</th>
+                         <th>Estado</th>
+                         <th>Ação</th>
+                    </tr>
+               </thead>
+               <tbody>
+                    {% for automovel in automoveis %}
+                         <tr>
+                              <td><strong>{{ automovel.marca }} {{ automovel.modelo }}</strong><small>{{ automovel.combustivel }}</small></td>
+                              <td>{{ automovel.matricula }}</td>
+                              <td>{{ automovel.ano }}</td>
+                              <td>{{ '{:,.0f}'.format(automovel.quilometragem).replace(',', ' ') }} km</td>
+                              <td>{{ '{:,.2f}'.format(automovel.preco).replace(',', ' ').replace('.', ',') }} €</td>
+                              <td><span class="estado estado-{{ automovel.estado }}">{{ automovel.estado|capitalize }}</span></td>
+                              <td><a class="link-acao" href="{{ url_for('detalhes_automovel', automovel_id=automovel.id) }}">Ver detalhes →</a></td>
+                         </tr>
+                    {% endfor %}
+               </tbody>
+          </table>
+     </div>
+{% else %}
+     <section class="cartao estado-vazio">
+          <h2>Ainda não existem automóveis</h2>
+          <p>Comece por registar o primeiro veículo do inventário.</p>
+          <a class="botao botao-primario" href="{{ url_for('criar_automovel') }}">Registar primeiro automóvel</a>
+     </section>
+{% endif %}
+{% endblock %}

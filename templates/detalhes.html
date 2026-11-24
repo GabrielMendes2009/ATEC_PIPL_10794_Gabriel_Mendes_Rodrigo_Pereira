@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ automovel.marca }} {{ automovel.modelo }} | Stand Auto{% endblock %}
+{% block content %}
+<a class="voltar" href="{{ url_for('listar_automoveis') }}">← Voltar ao inventário</a>
+<section class="detalhes-cabecalho">
+     <div>
+          <span class="etiqueta">Automóvel #{{ automovel.id }}</span>
+          <h1>{{ automovel.marca }} {{ automovel.modelo }}</h1>
+          <p class="matricula-destaque">{{ automovel.matricula }}</p>
+     </div>
+     <span class="estado estado-{{ automovel.estado }}">{{ automovel.estado|capitalize }}</span>
+</section>
+
+<section class="cartao">
+     <div class="grelha-detalhes">
+          <div><span class="rotulo">Marca</span><strong>{{ automovel.marca }}</strong></div>
+          <div><span class="rotulo">Modelo</span><strong>{{ automovel.modelo }}</strong></div>
+          <div><span class="rotulo">Ano</span><strong>{{ automovel.ano }}</strong></div>
+          <div><span class="rotulo">Matrícula</span><strong>{{ automovel.matricula }}</strong></div>
+          <div><span class="rotulo">Quilometragem</span><strong>{{ '{:,.0f}'.format(automovel.quilometragem).replace(',', ' ') }} km</strong></div>
+          <div><span class="rotulo">Combustível</span><strong>{{ automovel.combustivel }}</strong></div>
+          <div><span class="rotulo">Preço</span><strong class="preco-destaque">{{ '{:,.2f}'.format(automovel.preco).replace(',', ' ').replace('.', ',') }} €</strong></div>
+     </div>
+     <div class="descricao">
+          <span class="rotulo">Descrição</span>
+          <p>{{ automovel.descricao or 'Sem descrição disponível.' }}</p>
+     </div>
+</section>
+{% endblock %}

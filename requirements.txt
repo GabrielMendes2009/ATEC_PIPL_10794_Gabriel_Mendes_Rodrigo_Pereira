@@ -1,0 +1,5 @@
+# Framework web usado para rotas, templates, sessões e mensagens flash.
+Flask==3.1.0
+
+# Integração entre Flask e SQLAlchemy para usar a base de dados relacional.
+Flask-SQLAlchemy==3.1.1
