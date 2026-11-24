@@ -96,7 +96,7 @@ def converter_dados_formulario(formulario):
           dados["ano"] = int(formulario.get("ano", ""))
           if dados["ano"] < 1886:
                erros.append("O ano deve ser igual ou superior a 1886.")
-          elif dados["ano"] >= 2026:
+          elif dados["ano"] > 2026:
                erros.append("O ano não pode ser maior que o ano atual")
 
      except (TypeError, ValueError):
