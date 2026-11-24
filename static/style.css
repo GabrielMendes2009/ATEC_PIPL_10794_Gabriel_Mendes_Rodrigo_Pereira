@@ -1,21 +1,26 @@
-/* =================================================================ati
-   1. VARIÁVEIS GLOBAIS
+/* =================================================================
+1. VARIÁVEIS GLOBAIS (Vice City / GTA VI - Estilo Natural)
    ================================================================ */
 :root {
-  --fundo: #f5f7fb;
-  --superficie: #ffffff;
-  --texto: #182230;
-  --texto-suave: #697586;
-  --linha: #e5e9f0;
-  --primaria: #135cbe;
-  --primaria-escura: #0d438b;
-  --sucesso: #137a52;
-  --erro: #b42318;
-  --sombra: 0 12px 30px rgba(25, 45, 80, 0.08);
+  --fundo: #0e0717;
+  --superficie: #170d24;
+  --superficie-alt: #211335;
+  --texto: #f3effa;
+  --texto-suave: #9c8bbd;
+  --linha: #2e1b48;
+  
+  --primaria: #ff2a7f;
+  --primaria-escura: #d61867;
+  --secundaria: #00e5ff;
+  --destaque-sol: #ff7e33;
+  
+  --sucesso: #10b981;
+  --erro: #ef4444;
+  --sombra: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
 
 /* =================================================================
-   2. ESTILOS BASE E RESET
+2. ESTILOS BASE E RESET
    ================================================================ */
 * {
   box-sizing: border-box;
@@ -30,19 +35,20 @@ body {
 }
 
 a {
-  color: var(--primaria);
+  color: var(--secundaria);
   text-decoration: none;
 }
 
 a:hover {
-  color: var(--primaria-escura);
+  color: var(--primaria);
 }
 
 h1 {
   margin: 5px 0 8px;
   font-size: clamp(2rem, 4vw, 3rem);
   line-height: 1.1;
-  letter-spacing: -.04em;
+  letter-spacing: -.03em;
+  color: var(--texto);
 }
 
 h2 {
@@ -54,7 +60,7 @@ p {
 }
 
 /* =================================================================
-   3. LAYOUT E ESTRUTURA
+3. LAYOUT E ESTRUTURA
    ================================================================ */
 .container {
   width: min(1120px, calc(100% - 40px));
@@ -62,9 +68,10 @@ p {
 }
 
 .cabecalho {
-  background: #102a43;
+  position: relative;
+  background: #120822;
   color: white;
-  border-bottom: 4px solid #3d8bfd;
+  border-bottom: 3px solid var(--primaria);
 }
 
 .cabecalho-conteudo {
@@ -82,14 +89,22 @@ p {
 }
 
 .cabecalho nav > a:not(.botao) {
-  color: #d9e7f7;
+  color: var(--texto-suave);
+}
+
+.cabecalho nav > a:not(.botao):hover {
+  color: var(--secundaria);
 }
 
 .marca-site {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   color: white;
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   font-weight: 800;
-  letter-spacing: .02em;
+  letter-spacing: .05em;
+  text-transform: uppercase;
 }
 
 .cabecalho-pagina {
@@ -97,17 +112,17 @@ p {
   justify-content: space-between;
   align-items: end;
   gap: 24px;
-  padding: 54px 0 28px;
+  padding: 48px 0 24px;
 }
 
 /* =================================================================
-   4. COMPONENTES (Botões, Cartões, Tabelas e Formulários)
+4. COMPONENTES (Botões, Cartões, Tabelas e Formulários)
    ================================================================ */
 .etiqueta {
-  color: var(--primaria);
+  color: var(--destaque-sol);
   font-size: .74rem;
   font-weight: 800;
-  letter-spacing: .12em;
+  letter-spacing: .1em;
   text-transform: uppercase;
 }
 
@@ -116,11 +131,11 @@ p {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  padding: 0 18px;
+  min-height: 42px;
+  padding: 0 16px;
   border: 0;
-  border-radius: 8px;
-  font-weight: 700;
+  border-radius: 6px;
+  font-weight: 600;
   cursor: pointer;
   font: inherit;
 }
@@ -136,15 +151,32 @@ p {
 }
 
 .botao-secundario {
-  background: #edf2f7;
+  background: var(--superficie-alt);
   color: var(--texto);
+  border: 1px solid var(--linha);
+}
+
+.botao-secundario:hover {
+  border-color: var(--secundaria);
+  color: var(--secundaria);
+}
+
+/* O botão de perigo diferencia visualmente uma ação irreversível. */
+.botao-perigo {
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--erro);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.botao-perigo:hover {
+  background: rgba(239, 68, 68, 0.22);
 }
 
 /* Cartões */
 .cartao {
   background: var(--superficie);
   border: 1px solid var(--linha);
-  border-radius: 14px;
+  border-radius: 12px;
   box-shadow: var(--sombra);
 }
 
@@ -160,7 +192,7 @@ table {
 }
 
 th, td {
-  padding: 18px 20px;
+  padding: 16px 18px;
   text-align: left;
   border-bottom: 1px solid var(--linha);
   white-space: nowrap;
@@ -170,7 +202,7 @@ th {
   color: var(--texto-suave);
   font-size: .74rem;
   text-transform: uppercase;
-  letter-spacing: .07em;
+  letter-spacing: .05em;
 }
 
 tbody tr:last-child td {
@@ -184,43 +216,67 @@ td small {
 }
 
 .link-acao {
-  font-weight: 700;
+  font-weight: 600;
+}
+
+/* Mantém os links de manutenção organizados na mesma célula da tabela. */
+.acoes-tabela {
+  display: flex;
+  gap: 12px;
+}
+
+/* Cartão e grelha usados pelo formulário de pesquisa na página inicial. */
+.pesquisa-cartao {
+  margin-bottom: 24px;
+  padding: 16px 20px;
+}
+
+.formulario-pesquisa {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+}
+
+.formulario-pesquisa .campo {
+  flex: 1;
 }
 
 /* Estados (Disponível / Vendido) */
 .estado {
   display: inline-block;
-  padding: 5px 10px;
+  padding: 4px 10px;
   border-radius: 999px;
-  font-size: .78rem;
-  font-weight: 800;
+  font-size: .75rem;
+  font-weight: 700;
 }
 
 .estado-disponível {
-  color: #086c43;
-  background: #dff7eb;
+  color: var(--sucesso);
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
 }
 
 .estado-vendido {
-  color: #8b2b12;
-  background: #ffeadf;
+  color: var(--destaque-sol);
+  background: rgba(255, 126, 51, 0.12);
+  border: 1px solid rgba(255, 126, 51, 0.25);
 }
 
 /* Formulários */
 .formulario {
-  padding: 28px;
+  padding: 24px;
 }
 
 .grelha-formulario {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
+  gap: 18px;
 }
 
 .campo {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 6px;
 }
 
 .campo-largo {
@@ -228,24 +284,24 @@ td small {
 }
 
 label, .rotulo {
-  font-size: .8rem;
+  font-size: .78rem;
   color: var(--texto-suave);
-  font-weight: 800;
+  font-weight: 700;
 }
 
 input, select, textarea {
   width: 100%;
-  padding: 12px 13px;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--linha);
+  border-radius: 6px;
   color: var(--texto);
-  background: white;
+  background: var(--superficie-alt);
   font: inherit;
 }
 
 input:focus, select:focus, textarea:focus {
-  outline: 3px solid rgba(19, 92, 190, .15);
-  border-color: var(--primaria);
+  outline: 2px solid var(--secundaria);
+  border-color: var(--secundaria);
 }
 
 textarea {
@@ -256,7 +312,7 @@ textarea {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  margin-top: 28px;
+  margin-top: 24px;
 }
 
 /* Mensagens e Alertas */
@@ -265,32 +321,34 @@ textarea {
 }
 
 .mensagem {
-  padding: 13px 16px;
-  border-radius: 8px;
+  padding: 12px 14px;
+  border-radius: 6px;
   margin-bottom: 10px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .mensagem-sucesso {
-  background: #dff7eb;
+  background: rgba(16, 185, 129, 0.15);
   color: var(--sucesso);
+  border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .mensagem-erro {
-  background: #fee4e2;
+  background: rgba(239, 68, 68, 0.15);
   color: var(--erro);
+  border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 .estado-vazio {
   margin-top: 10px;
-  padding: 56px 24px;
+  padding: 48px 24px;
   text-align: center;
 }
 
 .voltar {
   display: inline-block;
-  margin-top: 38px;
-  font-weight: 700;
+  margin-top: 32px;
+  font-weight: 600;
 }
 
 /* Detalhes do Veículo */
@@ -299,31 +357,31 @@ textarea {
   align-items: end;
   justify-content: space-between;
   gap: 24px;
-  padding: 32px 0 26px;
+  padding: 28px 0 24px;
 }
 
 .matricula-destaque {
   margin: 0;
   font-weight: 800;
-  letter-spacing: .12em;
-  color: var(--texto);
+  letter-spacing: .1em;
+  color: var(--secundaria);
 }
 
 .grelha-detalhes {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 26px;
-  padding: 30px;
+  gap: 24px;
+  padding: 24px;
 }
 
 .grelha-detalhes div {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
 }
 
 .grelha-detalhes strong {
-  font-size: 1.05rem;
+  font-size: 1rem;
 }
 
 .preco-destaque {
@@ -332,7 +390,7 @@ textarea {
 
 .descricao {
   border-top: 1px solid var(--linha);
-  padding: 24px 30px 30px;
+  padding: 22px 24px 26px;
 }
 
 .descricao p {
@@ -340,12 +398,25 @@ textarea {
   white-space: pre-line;
 }
 
+/* Alinha as ações de editar e eliminar abaixo dos detalhes do veículo. */
+.acoes-detalhes {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0 32px;
+}
+
+.acoes-detalhes form {
+  margin: 0;
+}
+
 /* =================================================================
-   5. MEDIA QUERIES (Responsividade)
+5. MEDIA QUERIES (Responsividade)
    ================================================================ */
 @media (max-width: 700px) {
   .container {
-    width: min(100% - 28px, 1120px);
+    width: min(100% - 24px, 1120px);
   }
   
   .cabecalho-conteudo, 
@@ -359,9 +430,9 @@ textarea {
     padding: 16px 0;
   }
   
-  .cabecalho nav {
+  .cabecalox nav {
     flex-wrap: wrap;
-    gap: 14px;
+    gap: 12px;
   }
   
   .grelha-formulario, 
@@ -370,10 +441,16 @@ textarea {
   }
   
   .grelha-detalhes {
-    padding: 24px;
+    padding: 20px;
   }
   
   .formulario {
-    padding: 20px;
+    padding: 18px;
+  }
+
+  .formulario-pesquisa,
+  .acoes-detalhes {
+    align-items: stretch;
+    flex-direction: column;
   }
 }

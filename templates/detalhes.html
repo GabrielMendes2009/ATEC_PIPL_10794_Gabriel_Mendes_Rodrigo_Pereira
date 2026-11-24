@@ -26,4 +26,15 @@
           <p>{{ automovel.descricao or 'Sem descrição disponível.' }}</p>
      </div>
 </section>
+
+<!-- Ações de manutenção do registo: editar e eliminar. -->
+<div class="acoes-detalhes">
+     <a class="botao botao-primario" href="{{ url_for('editar_automovel', automovel_id=automovel.id) }}">Editar automóvel</a>
+     <!-- confirm() pede confirmação antes de enviar o formulário de eliminação. -->
+     <form method="post" action="{{ url_for('remover_automovel', automovel_id=automovel.id) }}"
+           onsubmit="return confirm('Tem a certeza de que pretende eliminar este automóvel? Esta ação não pode ser desfeita.');">
+          <input type="hidden" name="confirmacao" value="eliminar">
+          <button class="botao botao-perigo" type="submit">Eliminar automóvel</button>
+     </form>
+</div>
 {% endblock %}

@@ -1,12 +1,3 @@
-"""Aplicação web do Stand Auto — implementação do Membro 1.
-
-Este módulo configura o Flask, liga a aplicação à base de dados SQLite,
-define as rotas e trata o formulário de criação de automóveis.
-
-As rotas que pertencem ao Membro 2, como pesquisa, edição e remoção,
-podem ser acrescentadas neste mesmo ficheiro ou separadas em blueprints.
-"""
-
 # Decimal é usado para validar preços sem os problemas de precisão de float.
 from decimal import Decimal, InvalidOperation
 
@@ -20,6 +11,9 @@ from pathlib import Path
 # - render_template processa ficheiros HTML Jinja2;
 # - request lê dados enviados pelo navegador.
 from flask import Flask, flash, redirect, render_template, request, url_for
+
+# or_ permite combinar vários filtros SQLAlchemy numa única pesquisa.
+from sqlalchemy import or_
 
 # IntegrityError aparece por exemplo, quando se tenta repetir uma matrícula.
 from sqlalchemy.exc import IntegrityError
@@ -134,11 +128,34 @@ def converter_dados_formulario(formulario):
 
 @app.route("/")
 def listar_automoveis():
-     """Rota GET principal: consulta e mostra todos os automóveis."""
-     # A consulta vem da tabela SQL, não de uma lista Python.
-     # A ordenação descendente mostra os registos mais recentes primeiro.
-     automoveis = Automovel.query.order_by(Automovel.id.desc()).all()
-     return render_template("listar.html", automoveis=automoveis)
+     """Rota GET principal: lista todos os automóveis ou filtra a pesquisa."""
+     # Lemos o texto da caixa de pesquisa e removemos espaços desnecessários.
+     pesquisa = request.args.get("q", "").strip()
+
+     # Começamos pela consulta à tabela e só adicionamos filtros quando o
+     # utilizador escreveu uma pesquisa.
+     consulta = Automovel.query
+     if pesquisa:
+          # ilike faz uma comparação SQL sem distinguir maiúsculas de
+          # minúsculas e os sinais % permitem encontrar o texto no meio do
+          # campo. A pesquisa abrange marca, modelo e matrícula.
+          termo = f"%{pesquisa}%"
+          consulta = consulta.filter(
+               or_(
+                    Automovel.marca.ilike(termo),
+                    Automovel.modelo.ilike(termo),
+                    Automovel.matricula.ilike(termo),
+               )
+          )
+
+     # Mantemos os automóveis mais recentes no topo da listagem.
+     automoveis = consulta.order_by(Automovel.id.desc()).all()
+     return render_template(
+          "listar.html",
+          automoveis=automoveis,
+          pesquisa=pesquisa,
+          pesquisa_realizada=bool(pesquisa),
+     )
 
 
 @app.route("/automovel/novo", methods=["GET", "POST"])
@@ -190,6 +207,73 @@ def detalhes_automovel(automovel_id):
      automovel = db.get_or_404(Automovel, automovel_id)
      return render_template("detalhes.html", automovel=automovel)
 
+@app.route("/automovel/<int:automovel_id>/editar", methods=["GET", "POST"])
+def editar_automovel(automovel_id):
+     """Mostra e atualiza o formulário de um automóvel existente."""
+     # get_or_404 impede a edição de um identificador que não existe.
+     automovel = db.get_or_404(Automovel, automovel_id)
+
+     if request.method == "POST":
+          # Reutilizamos a mesma validação usada no registo de automóveis.
+          dados, erros = converter_dados_formulario(request.form)
+
+          if erros:
+               # Os dados enviados voltam ao formulário para o utilizador
+               # corrigir apenas os campos inválidos.
+               for erro in erros:
+                    flash(erro, "erro")
+               return render_template(
+                    "editar.html", automovel=automovel, dados=dados
+               ), 400
+
+          # Atualizamos todos os campos editáveis com os novos valores.
+          for campo, valor in dados.items():
+               setattr(automovel, campo, valor)
+
+          try:
+               # O commit grava as alterações na linha já existente.
+               db.session.commit()
+          except IntegrityError:
+               # A matrícula continua única mesmo quando o registo é editado.
+               db.session.rollback()
+               flash("Já existe um automóvel com essa matrícula.", "erro")
+               return render_template(
+                    "editar.html", automovel=automovel, dados=dados
+               ), 400
+          except ValueError as erro:
+               # Capturamos também as validações declaradas no modelo.
+               db.session.rollback()
+               flash(str(erro), "erro")
+               return render_template(
+                    "editar.html", automovel=automovel, dados=dados
+               ), 400
+
+          flash("Automóvel atualizado com sucesso.", "sucesso")
+          return redirect(url_for("detalhes_automovel", automovel_id=automovel.id))
+
+     # No primeiro acesso, os valores atuais são enviados para preencher os
+     # campos automaticamente, sem obrigar a redigitar os dados.
+     return render_template("editar.html", automovel=automovel, dados=automovel)
+
+
+@app.route("/automovel/<int:automovel_id>/eliminar", methods=["POST"])
+def remover_automovel(automovel_id):
+     """Elimina um automóvel depois da confirmação feita no formulário."""
+     # O endpoint aceita apenas POST para evitar eliminações acidentais através
+     # de uma simples visita a um link GET.
+     automovel = db.get_or_404(Automovel, automovel_id)
+
+     # A caixa de confirmação JavaScript é a primeira barreira no navegador;
+     # esta verificação no servidor garante que o formulário confirmou a ação.
+     if request.form.get("confirmacao") != "eliminar":
+          flash("A eliminação foi cancelada.", "erro")
+          return redirect(url_for("detalhes_automovel", automovel_id=automovel.id))
+
+     # Apagamos o objeto e confirmamos a transação na base de dados.
+     db.session.delete(automovel)
+     db.session.commit()
+     flash("Automóvel eliminado com sucesso.", "sucesso")
+     return redirect(url_for("listar_automoveis"))
 
 @app.errorhandler(404)
 def pagina_nao_encontrada(erro):

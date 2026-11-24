@@ -10,6 +10,23 @@
      <a class="botao botao-primario" href="{{ url_for('criar_automovel') }}">+ Novo automóvel</a>
 </section>
 
+<!-- Pesquisa por marca, modelo ou matrícula; o formulário envia o termo por GET. -->
+<section class="cartao pesquisa-cartao" aria-label="Pesquisar automóveis">
+     <form class="formulario-pesquisa" method="get" action="{{ url_for('listar_automoveis') }}">
+          <div class="campo">
+               <label for="q">Pesquisar inventário</label>
+               <input id="q" name="q" type="search" maxlength="80"
+                      placeholder="Marca, modelo ou matrícula"
+                      value="{{ pesquisa }}">
+          </div>
+          <button class="botao botao-primario" type="submit">Pesquisar</button>
+          {% if pesquisa_realizada %}
+               <!-- Permite limpar rapidamente o filtro atual. -->
+               <a class="botao botao-secundario" href="{{ url_for('listar_automoveis') }}">Limpar</a>
+          {% endif %}
+     </form>
+</section>
+
 {% if automoveis %}
      <div class="cartao tabela-wrapper">
           <table>
