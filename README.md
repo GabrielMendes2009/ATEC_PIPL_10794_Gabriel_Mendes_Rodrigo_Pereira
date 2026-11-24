@@ -109,4 +109,4 @@ Na primeira execução é criado automaticamente o ficheiro `automoveis.db` na p
 
 ## Notas de desenvolvimento
 
-O código contém comentários nas alterações e nas áreas principais para explicar a função das rotas, das consultas SQLAlchemy, dos formulários, da confirmação de eliminação e dos estilos. A `SECRET_KEY` existente é adequada apenas para desenvolvimento; num ambiente de produção deve ser substituída por uma variável de ambiente segura.
+A `SECRET_KEY` existente é adequada apenas para desenvolvimento; num ambiente de produção deve ser substituída por uma variável de ambiente segura.
