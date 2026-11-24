@@ -2,64 +2,64 @@
 {% block title %}Editar {{ automovel.marca }} {{ automovel.modelo }} | Stand Auto{% endblock %}
 {% block content %}
 <section class="cabecalho-pagina">
-     <div>
-          <span class="etiqueta">Edição de registo #{{ automovel.id }}</span>
-          <h1>Editar automóvel</h1>
-          <p>Altere os dados abaixo e guarde para atualizar o inventário.</p>
-     </div>
+    <div>
+        <span class="etiqueta">Edição de registo #{{ automovel.id }}</span>
+        <h1>Editar automóvel</h1>
+        <p>Altere os dados abaixo e guarde para atualizar o inventário.</p>
+    </div>
 </section>
 
 <!-- O mesmo formulário é usado para mostrar e validar os dados editados. -->
 <form class="cartao formulario" method="post" novalidate>
-     <div class="grelha-formulario">
-          <div class="campo">
-               <label for="marca">Marca *</label>
-               <input id="marca" name="marca" type="text" maxlength="80" required value="{{ dados.marca|default('', true) }}">
-          </div>
-          <div class="campo">
-               <label for="modelo">Modelo *</label>
-               <input id="modelo" name="modelo" type="text" maxlength="80" required value="{{ dados.modelo|default('', true) }}">
-          </div>
-          <div class="campo">
-               <label for="ano">Ano *</label>
-               <input id="ano" name="ano" type="number" min="1886" required value="{{ dados.ano|default('', true) }}">
-          </div>
-          <div class="campo">
-               <label for="matricula">Matrícula *</label>
-               <input id="matricula" name="matricula" type="text" maxlength="20" required placeholder="AA-00-AA" value="{{ dados.matricula|default('', true) }}">
-          </div>
-          <div class="campo">
-               <label for="quilometragem">Quilometragem (km) *</label>
-               <input id="quilometragem" name="quilometragem" type="number" min="0" required value="{{ dados.quilometragem|default('', true) }}">
-          </div>
-          <div class="campo">
-               <label for="combustivel">Combustível *</label>
-               <select id="combustivel" name="combustivel" required>
-                    <option value="">Selecionar</option>
-                    {% for opcao in ['Gasolina', 'Diesel', 'Híbrido', 'Elétrico', 'GPL'] %}
-                         <option value="{{ opcao }}" {% if dados.combustivel == opcao %}selected{% endif %}>{{ opcao }}</option>
-                    {% endfor %}
-               </select>
-          </div>
-          <div class="campo">
-               <label for="preco">Preço (€) *</label>
-               <input id="preco" name="preco" type="number" min="0" step="0.01" required value="{{ dados.preco|default('', true) }}">
-          </div>
-          <div class="campo">
-               <label for="estado">Estado *</label>
-               <select id="estado" name="estado" required>
-                    <option value="disponível" {% if dados.estado == 'disponível' %}selected{% endif %}>Disponível</option>
-                    <option value="vendido" {% if dados.estado == 'vendido' %}selected{% endif %}>Vendido</option>
-               </select>
-          </div>
-          <div class="campo campo-largo">
-               <label for="descricao">Descrição</label>
-               <textarea id="descricao" name="descricao" rows="5" maxlength="2000">{{ dados.descricao|default('', true) }}</textarea>
-          </div>
-     </div>
-     <div class="acoes-formulario">
-          <a class="botao botao-secundario" href="{{ url_for('detalhes_automovel', automovel_id=automovel.id) }}">Cancelar</a>
-          <button class="botao botao-primario" type="submit">Guardar alterações</button>
-     </div>
+    <div class="grelha-formulario">
+        <div class="campo">
+            <label for="marca">Marca *</label>
+            <input id="marca" name="marca" type="text" maxlength="80" required value="{{ dados.marca|default('', true) }}">
+        </div>
+        <div class="campo">
+            <label for="modelo">Modelo *</label>
+            <input id="modelo" name="modelo" type="text" maxlength="80" required value="{{ dados.modelo|default('', true) }}">
+        </div>
+        <div class="campo">
+            <label for="ano">Ano *</label>
+            <input id="ano" name="ano" type="number" min="1886" required value="{{ dados.ano|default('', true) }}">
+        </div>
+        <div class="campo">
+            <label for="matricula">Matrícula *</label>
+            <input id="matricula" name="matricula" type="text" maxlength="20" required placeholder="AA-00-AA" value="{{ dados.matricula|default('', true) }}">
+        </div>
+        <div class="campo">
+            <label for="quilometragem">Quilometragem (km) *</label>
+            <input id="quilometragem" name="quilometragem" type="number" min="0" required value="{{ dados.quilometragem|default('', true) }}">
+        </div>
+        <div class="campo">
+            <label for="combustivel">Combustível *</label>
+            <select id="combustivel" name="combustivel" required>
+                <option value="">Selecionar</option>
+                {% for opcao in ['Gasolina', 'Diesel', 'Híbrido', 'Elétrico', 'GPL'] %}
+                    <option value="{{ opcao }}" {% if dados.combustivel == opcao %}selected{% endif %}>{{ opcao }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="campo">
+            <label for="preco">Preço (€) *</label>
+            <input id="preco" name="preco" type="number" min="0" step="0.01" required value="{{ dados.preco|default('', true) }}">
+        </div>
+        <div class="campo">
+            <label for="estado">Estado *</label>
+            <select id="estado" name="estado" required>
+                <option value="disponível" {% if dados.estado == 'disponível' %}selected{% endif %}>Disponível</option>
+                <option value="vendido" {% if dados.estado == 'vendido' %}selected{% endif %}>Vendido</option>
+            </select>
+        </div>
+        <div class="campo campo-largo">
+            <label for="descricao">Descrição</label>
+            <textarea id="descricao" name="descricao" rows="5" maxlength="2000">{{ dados.descricao|default('', true) }}</textarea>
+        </div>
+    </div>
+    <div class="acoes-formulario">
+        <a class="botao botao-secundario" href="{{ url_for('detalhes_automovel', automovel_id=automovel.id) }}">Cancelar</a>
+        <button class="botao botao-primario" type="submit">Guardar alterações</button>
+    </div>
 </form>
 {% endblock %}

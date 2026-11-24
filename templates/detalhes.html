@@ -3,38 +3,38 @@
 {% block content %}
 <a class="voltar" href="{{ url_for('listar_automoveis') }}">← Voltar ao inventário</a>
 <section class="detalhes-cabecalho">
-     <div>
-          <span class="etiqueta">Automóvel #{{ automovel.id }}</span>
-          <h1>{{ automovel.marca }} {{ automovel.modelo }}</h1>
-          <p class="matricula-destaque">{{ automovel.matricula }}</p>
-     </div>
-     <span class="estado estado-{{ automovel.estado }}">{{ automovel.estado|capitalize }}</span>
+    <div>
+        <span class="etiqueta">Automóvel #{{ automovel.id }}</span>
+        <h1>{{ automovel.marca }} {{ automovel.modelo }}</h1>
+        <p class="matricula-destaque">{{ automovel.matricula }}</p>
+    </div>
+    <span class="estado estado-{{ automovel.estado }}">{{ automovel.estado|capitalize }}</span>
 </section>
 
 <section class="cartao">
-     <div class="grelha-detalhes">
-          <div><span class="rotulo">Marca</span><strong>{{ automovel.marca }}</strong></div>
-          <div><span class="rotulo">Modelo</span><strong>{{ automovel.modelo }}</strong></div>
-          <div><span class="rotulo">Ano</span><strong>{{ automovel.ano }}</strong></div>
-          <div><span class="rotulo">Matrícula</span><strong>{{ automovel.matricula }}</strong></div>
-          <div><span class="rotulo">Quilometragem</span><strong>{{ '{:,.0f}'.format(automovel.quilometragem).replace(',', ' ') }} km</strong></div>
-          <div><span class="rotulo">Combustível</span><strong>{{ automovel.combustivel }}</strong></div>
-          <div><span class="rotulo">Preço</span><strong class="preco-destaque">{{ '{:,.2f}'.format(automovel.preco).replace(',', ' ').replace('.', ',') }} €</strong></div>
-     </div>
-     <div class="descricao">
-          <span class="rotulo">Descrição</span>
-          <p>{{ automovel.descricao or 'Sem descrição disponível.' }}</p>
-     </div>
+    <div class="grelha-detalhes">
+        <div><span class="rotulo">Marca</span><strong>{{ automovel.marca }}</strong></div>
+        <div><span class="rotulo">Modelo</span><strong>{{ automovel.modelo }}</strong></div>
+        <div><span class="rotulo">Ano</span><strong>{{ automovel.ano }}</strong></div>
+        <div><span class="rotulo">Matrícula</span><strong>{{ automovel.matricula }}</strong></div>
+        <div><span class="rotulo">Quilometragem</span><strong>{{ '{:,.0f}'.format(automovel.quilometragem).replace(',', ' ') }} km</strong></div>
+        <div><span class="rotulo">Combustível</span><strong>{{ automovel.combustivel }}</strong></div>
+        <div><span class="rotulo">Preço</span><strong class="preco-destaque">{{ '{:,.2f}'.format(automovel.preco).replace(',', ' ').replace('.', ',') }} €</strong></div>
+    </div>
+    <div class="descricao">
+        <span class="rotulo">Descrição</span>
+        <p>{{ automovel.descricao or 'Sem descrição disponível.' }}</p>
+    </div>
 </section>
 
 <!-- Ações de manutenção do registo: editar e eliminar. -->
 <div class="acoes-detalhes">
-     <a class="botao botao-primario" href="{{ url_for('editar_automovel', automovel_id=automovel.id) }}">Editar automóvel</a>
-     <!-- confirm() pede confirmação antes de enviar o formulário de eliminação. -->
-     <form method="post" action="{{ url_for('remover_automovel', automovel_id=automovel.id) }}"
-           onsubmit="return confirm('Tem a certeza de que pretende eliminar este automóvel? Esta ação não pode ser desfeita.');">
-          <input type="hidden" name="confirmacao" value="eliminar">
-          <button class="botao botao-perigo" type="submit">Eliminar automóvel</button>
-     </form>
+    <a class="botao botao-primario" href="{{ url_for('editar_automovel', automovel_id=automovel.id) }}">Editar automóvel</a>
+    <!-- confirm() pede confirmação antes de enviar o formulário de eliminação. -->
+    <form method="post" action="{{ url_for('remover_automovel', automovel_id=automovel.id) }}"
+            onsubmit="return confirm('Tem a certeza de que pretende eliminar este automóvel? Esta ação não pode ser desfeita.');">
+        <input type="hidden" name="confirmacao" value="eliminar">
+        <button class="botao botao-perigo" type="submit">Eliminar automóvel</button>
+    </form>
 </div>
 {% endblock %}

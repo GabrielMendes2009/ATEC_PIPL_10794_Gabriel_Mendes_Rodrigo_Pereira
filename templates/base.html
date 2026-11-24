@@ -1,29 +1,29 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
-     <meta charset="utf-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1">
-     <title>{% block title %}Stand Auto{% endblock %}</title>
-     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Stand Auto{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-     <header class="cabecalho">
-          <div class="container cabecalho-conteudo">
-               <a class="marca-site" href="{{ url_for('listar_automoveis') }}">Stand Auto</a>
-          </div>
-     </header>
+    <header class="cabecalho">
+        <div class="container cabecalho-conteudo">
+            <a class="marca-site" href="{{ url_for('listar_automoveis') }}">Stand Auto</a>
+        </div>
+    </header>
 
-     <main class="container">
-          {% with mensagens = get_flashed_messages(with_categories=true) %}
-               {% if mensagens %}
-                    <div class="mensagens" aria-live="polite">
-                         {% for categoria, mensagem in mensagens %}
-                              <div class="mensagem mensagem-{{ categoria }}">{{ mensagem }}</div>
-                         {% endfor %}
-                    </div>
-               {% endif %}
-          {% endwith %}
-          {% block content %}{% endblock %}
-     </main>
+    <main class="container">
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+            {% if mensagens %}
+                <div class="mensagens" aria-live="polite">
+                    {% for categoria, mensagem in mensagens %}
+                        <div class="mensagem mensagem-{{ categoria }}">{{ mensagem }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
 </body>
 </html>
